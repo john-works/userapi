@@ -1,0 +1,15 @@
+{
+    "name": "PPDA PWA",
+    "icons": [
+      {
+        "src": "../images/ppda.png",
+        "type": "image/png",
+        "sizes": "290x80"
+      }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "Application for offline access to PPDA ERP"
+}
+  
