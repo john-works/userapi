@@ -10,7 +10,7 @@
 namespace app\Helpers;
 
 
-use app\ApiResp;
+use App\ApiResp;
 use GuzzleHttp\Client;
 
 use GuzzleHttp\Exception\RequestException;

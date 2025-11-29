@@ -35,50 +35,22 @@ Route::group(['middleware' => ['web']], function (){
     /*
      * This is for processing the user login
      * */
-    Route::post('/users/signin',
-        [
-            'uses' => 'UserController@signin',
-            'as' => 'signin'
-        ]);
-    Route::get('/user/logout',
-        [
-            'uses' => 'UserController@logoutUser',
-            'as' => 'logout_user'
-        ]);
+    Route::post('/users/signin', [UserController::class, 'signin'])->name('signin');
+    Route::get('/user/logout', [UserController::class, 'logoutUser'])->name('logout_user');
     Route::get('/user/back-to-ppda-apps',
         [
             'uses' => 'Auth\LoginController@redirectBackToPpdaApps',
             'as' => 'back-to-ppda-apps'
-    ]);
-    Route::get('/password/forgot',
-        [
-            'uses' => 'UserController@getResetPasswordForm',
-            'as' => 'user.forgot-password'
         ]);
+    Route::get('/password/forgot', [UserController::class, 'getResetPasswordForm'])->name('user.forgot-password');
 
-    Route::post('/password/reset',
-        [
-            'uses' => 'UserController@resetPassword',
-            'as' => 'user.reset-password'
-        ]);
+    Route::post('/password/reset', [UserController::class, 'resetPassword'])->name('user.reset-password');
 
-    Route::get('/admin/signout/{redirectToApp?}/{redirectSpecificPage?}',
-        [
-            'uses' => 'UserController@signoutAdmin',
-            'as' => 'singout_admin'
-        ]);
+    Route::get('/admin/signout/{redirectToApp?}/{redirectSpecificPage?}', [UserController::class, 'signoutAdmin'])->name('singout_admin');
 
-    Route::get('/password/change-auto-form',
-        [
-            'uses' => 'UserController@getChangeDefaultPasswordForm',
-            'as' => 'user.password.change-auto.form'
-        ]);
+    Route::get('/password/change-auto-form', 'UserController@getChangeDefaultPasswordForm')->name('user.password.change-auto.form');
 
-    Route::post('/password/change-auto-password',
-        [
-            'uses' => 'UserController@changeDefaultPassword',
-            'as' => 'user.password.change-default'
-        ]);
+    Route::post('/password/change-auto-password', [UserController::class, 'changeDefaultPassword'])->name('user.password.change-default');
         
     Route::prefix('tickets')->group(function (){
         Route::get('/index/{username}', 'TicketController@index')->name('tickets.index');
@@ -168,11 +140,7 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
     Route::get('/run_jobs', 'JobErrorLogsController@run_jobs')->name('administration.run_jobs');
     Route::get('/run_jobs/trigger/{command}', 'JobErrorLogsController@trigger_job')->name('administration.run_jobs.trigger');
 
-    Route::get('/ppda-apps/selection',
-        [
-            'uses' => 'UserController@getAppSelectionView',
-            'as' => 'users.app-selection'
-        ]);
+    Route::get('/ppda-apps/selection', [UserController::class, 'getAppSelectionView'])->name('users.app-selection');
 
     Route::get('/users/access-app/{app}',
         [
@@ -181,24 +149,12 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
         ]);
 
 
-    Route::get('/admin/dashboard',
-        [
-            'uses' => 'UserController@getAdminDashboard',
-            'as' => 'admin_dashboard'
-        ]);
+    Route::get('/admin/dashboard', [UserController::class, 'getAdminDashboard'])->name('admin_dashboard');
 
-    Route::get('/users/dashboard',
-        [
-            'uses' => 'UserController@getUserDashboard',
-            'as' => 'user_dashboard'
-        ]);
+    Route::get('/users/dashboard', 'UserController@getUserDashboard')->name('user_dashboard');
 
 
-    Route::get('/users/profile',
-        [
-            'uses' => 'UserController@getUserProfilePage',
-            'as' => 'users.profile'
-        ]);
+    Route::get('/users/profile', [UserController::class, 'getUserProfilePage'])->name('users.profile');
 
     Route::get('/users/academic-bg/{id}',
         [
@@ -207,23 +163,11 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
         ]);
 
 
-    Route::post('/users/update-profile',
-        [
-            'uses' => 'UserController@updateUserProfileByOwner',
-            'as' => 'users.update-own-profile'
-        ]);
+    Route::post('/users/update-profile', [UserController::class, 'updateUserProfileByOwner'])->name('users.update-own-profile');
 
-    Route::post('/users/academic-bg-save',
-        [
-            'uses' => 'UserController@saveUserAcademicBackgroundAjax',
-            'as' => 'users.academic-bg-save'
-        ]);
+    Route::post('/users/academic-bg-save', 'UserController@saveUserAcademicBackgroundAjax')->name('users.academic-bg-save');
 
-    Route::post('/users/academic-bg-update',
-        [
-            'uses' => 'UserController@updateUserAcademicBackgroundAjax',
-            'as' => 'users.academic-bg-update'
-        ]);
+    Route::post('/users/academic-bg-update', [UserController::class, 'updateUserAcademicBackgroundAjax'])->name('users.academic-bg-update');
 
     Route::get('/users/academic-bg/delete/{id}',
         [
@@ -240,11 +184,7 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
             'as' => 'users.form'
         ]);
 
-    Route::post('/users/store',
-        [
-            'uses' => 'UserController@saveUserAjax',
-            'as' => 'users.store'
-        ]);
+    Route::post('/users/store', 'UserController@saveUserAjax')->name('users.store');
 
     Route::get('/settings/users',
         [
@@ -264,11 +204,7 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
             'as' => 'users.change-password-form'
         ]);
 
-    Route::post('/users/password/edit',
-        [
-            'uses' => 'UserController@changePassword',
-            'as' => 'change_password'
-        ]);
+    Route::post('/users/password/edit', 'UserController@changePassword')->name('change_password');
 
 
     Route::get('/users/delete/{id}',
@@ -299,11 +235,7 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
             'as' => 'organization.store'
         ]);
 
-    Route::post('/settings/organizations/edit',
-        [
-            'uses' => 'SettingsController@editOrganization',
-            'as' => 'organizations.update'
-        ]);
+    Route::post('/settings/organizations/edit', 'SettingsController@editOrganization')->name('organizations.update');
 
     Route::get('/settings/organizations/delete/{id}',
         [
@@ -373,11 +305,7 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
             'as' => 'departments.store'
         ]);
 
-    Route::post('/settings/departments/edit',
-        [
-            'uses' => 'SettingsController@editDepartment',
-            'as' => 'departments.update'
-        ]);
+    Route::post('/settings/departments/edit', 'SettingsController@editDepartment')->name('departments.update');
 
     Route::get('/settings/departments/delete/{id}',
         [
@@ -412,11 +340,7 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
             'uses' => 'SettingsController@allStrategicObjectives',
             'as' => 'admin.objectives.all'
         ]);
-    Route::post('/settings/strategic-objectives-save',
-        [
-            'uses' => 'SettingsController@saveStrategicObjectiveAjax',
-            'as' => 'admin.strategic-objectives.save'
-        ]);
+    Route::post('/settings/strategic-objectives-save', 'SettingsController@saveStrategicObjectiveAjax')->name('admin.strategic-objectives.save');
 
     Route::post('/settings/strategic-objectives-update',
         [
@@ -442,11 +366,7 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
             'as' => 'admin.competence-categories.all'
         ]);
 
-    Route::post('/settings/competence-categories-save',
-        [
-            'uses' => 'SettingsController@saveCompetenceCategoryAjax',
-            'as' => 'admin.competence-categories.save'
-        ]);
+    Route::post('/settings/competence-categories-save', 'SettingsController@saveCompetenceCategoryAjax')->name('admin.competence-categories.save');
 
     Route::post('/settings/competence-categories-update',
         [
@@ -500,11 +420,7 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
             'as' => 'admin.appraisals.complete'
         ]);
 
-    Route::post('/settings/appraisals/update-approvers',
-        [
-            'uses' => 'SettingsController@updateAppraisalApproversAjax',
-            'as' => 'admin.appraisals.update-approvers'
-        ]);
+    Route::post('/settings/appraisals/update-approvers', 'SettingsController@updateAppraisalApproversAjax')->name('admin.appraisals.update-approvers');
 
     /*
      * Edn Admin Competence Cateogries
@@ -560,11 +476,7 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
             'as' => 'admin.behavioral-competence-categories.all'
         ]);
 
-    Route::post('/settings/behavioral-competence-categories-save',
-        [
-            'uses' => 'BehavioralCompetenceCategoryController@save',
-            'as' => 'admin.behavioral-competence-categories.save'
-        ]);
+    Route::post('/settings/behavioral-competence-categories-save', 'BehavioralCompetenceCategoryController@save')->name('admin.behavioral-competence-categories.save');
 
     Route::post('/settings/behavioral-competence-categories-update',
         [
@@ -619,11 +531,7 @@ Route::group(['middleware' => ['web', 'users.authorized' /*'auth'*/]], function 
             'as' => 'department-units.all'
         ]);
 
-    Route::post('/settings/department-units/store',
-        [
-            'uses' => 'SettingsController@saveDepartmentUnitAjax',
-            'as' => 'department-units.store'
-        ]);
+    Route::post('/settings/department-units/store', 'SettingsController@saveDepartmentUnitAjax')->name('department-units.store');
 
     Route::post('/settings/department-units/edit',
         [
